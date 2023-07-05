@@ -1,6 +1,8 @@
-const mongoose = require("mongoose");
-
-mongoose.connect(
-  "mongodb+srv://chiraggps:hardie123@chiragscluster.yviarut.mongodb.net/",
-  { useUnifiedTopology: true, useNewUrlParser: true }
-);
+import mongoose from 'mongoose';
+import { config } from 'dotenv';
+import path from 'path';
+config({ path: path.resolve(__dirname, '../../.env') });
+mongoose.connect(process.env.MONGOOSE_SECRET, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
