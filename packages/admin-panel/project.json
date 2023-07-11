@@ -1,7 +1,7 @@
 {
-  "name": "admin-panel-frontend",
+  "name": "admin-panel",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/admin-panel-frontend",
+  "sourceRoot": "packages/admin-panel",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,11 +9,11 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/packages/admin-panel-frontend"
+        "outputPath": "dist/packages/admin-panel"
       },
       "configurations": {
         "development": {
-          "outputPath": "packages/admin-panel-frontend"
+          "outputPath": "packages/admin-panel"
         },
         "production": {}
       }
@@ -22,16 +22,16 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "admin-panel-frontend:build",
+        "buildTarget": "admin-panel:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "admin-panel-frontend:build:development",
+          "buildTarget": "admin-panel:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "admin-panel-frontend:build:production",
+          "buildTarget": "admin-panel:build:production",
           "dev": false
         }
       }
@@ -39,14 +39,14 @@
     "export": {
       "executor": "@nx/next:export",
       "options": {
-        "buildTarget": "admin-panel-frontend:build:production"
+        "buildTarget": "admin-panel:build:production"
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/admin-panel-frontend/jest.config.ts",
+        "jestConfig": "packages/admin-panel/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -60,9 +60,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/admin-panel-frontend/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["packages/admin-panel/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },

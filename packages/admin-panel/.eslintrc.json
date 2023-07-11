@@ -12,7 +12,7 @@
       "rules": {
         "@next/next/no-html-link-for-pages": [
           "error",
-          "packages/admin-panel-frontend/pages"
+          "packages/admin-panel/pages"
         ]
       }
     },

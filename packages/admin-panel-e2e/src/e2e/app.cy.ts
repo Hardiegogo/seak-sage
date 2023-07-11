@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po';
 
-describe('admin-panel-frontend', () => {
+describe('admin-panel', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {
@@ -8,6 +8,6 @@ describe('admin-panel-frontend', () => {
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome admin-panel-frontend');
+    getGreeting().contains('Welcome admin-panel');
   });
 });
