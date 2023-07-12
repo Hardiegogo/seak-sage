@@ -30,7 +30,7 @@ const authenticateJwtForAdmin = (
       }
     );
   } else {
-    res.status(401);
+    res.sendStatus(401);
   }
 };
 
