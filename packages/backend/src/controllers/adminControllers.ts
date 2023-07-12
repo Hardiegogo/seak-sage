@@ -10,7 +10,6 @@ interface IAdmin {
   _id?: string;
 }
 
-
 const generatejwtForAdmin = (admin: IAdmin): string => {
   return jwt.sign({ username: admin.username }, process.env.ADMIN_SECRET, {
     expiresIn: '2h',
@@ -35,11 +34,15 @@ const adminSignup = async (req: Request, res: Response) => {
 const adminLogin = async (req: Request, res: Response) => {
   // logic to log in admin
   const admin = req.body;
-  const existingAdmin = await Admin.findOne(admin);
-  if (existingAdmin) {
-    const token = generatejwtForAdmin(admin);
-    res.json({ message: 'Logged in successfully', token: token });
-  } else res.status(404).send('User not found');
+  if (admin?.username?.length && admin?.password?.length) {
+    const existingAdmin = await Admin.findOne(admin);
+    if (existingAdmin) {
+      const token = generatejwtForAdmin(admin);
+      res.json({ message: 'Logged in successfully', token: token,admin:{username:existingAdmin.username,id:existingAdmin._id} });
+    } else res.status(403).send('User not found');
+  } else {
+    res.status(403).send('Please enter details correctly');
+  }
 };
 
 const createCourse = async (

@@ -1,18 +1,15 @@
 import { AppProps } from 'next/app';
-import Head from 'next/head';
 import './styles.css';
+import { RecoilRoot } from 'recoil';
 
-function CustomApp({ Component, pageProps }: AppProps) {
+const CustomApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <Head>
-        <title>Welcome to admin-panel!</title>
-      </Head>
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
+      <RecoilRoot>
+          <Component {...pageProps} />
+      </RecoilRoot>
     </>
   );
-}
+};
 
 export default CustomApp;
