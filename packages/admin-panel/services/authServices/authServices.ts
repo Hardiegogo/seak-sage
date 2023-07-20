@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { IAdmin } from 'packages/admin-panel/types';
+import { IAdmin } from '../../types';
 import { SetterOrUpdater } from 'recoil';
+import { type } from 'os';
 
 export const loginUser = async (adminDetails: {
   username: string;
@@ -9,7 +10,7 @@ export const loginUser = async (adminDetails: {
   const { username, password } = adminDetails;
   const response = await axios({
     method: 'POST',
-    url: `${process.env.NEXT_PUBLIC_DEV_BACKEND}admin/login`,
+    url: `${process.env.NEXT_PUBLIC_DEV_BACKEND}/admin/login`,
     data: {
       username,
       password,
@@ -25,7 +26,7 @@ export const signupUser = async (adminDetails: {
   const { username, password } = adminDetails;
   const response = await axios({
     method: 'POST',
-    url: `${process.env.NEXT_PUBLIC_DEV_BACKEND}admin/signup`,
+    url: `${process.env.NEXT_PUBLIC_DEV_BACKEND}/admin/signup`,
     data: {
       username,
       password,
@@ -43,3 +44,11 @@ export const logoutUser = async (setAdmin:SetterOrUpdater<IAdmin>) => {
     isLoggedIn: false,
   });
 };
+
+export const AuthorisedApi = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_DEV_BACKEND,
+  timeout:1000,
+  headers: (typeof window!=='undefined') ? {
+    Authorization:'Bearer ' + JSON.parse(localStorage.getItem('token') as string)
+  } : {}
+});

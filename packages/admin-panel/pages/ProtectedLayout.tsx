@@ -7,12 +7,10 @@ const ProtectedLayout = ({
   children: React.JSX.Element | string;
 }) => {
   return (
-    <RequireAuth>
-      <>
-        <Navbar/>
-        {children}
-      </>
-    </RequireAuth>
+    <div>
+      <Navbar />
+      {children}
+    </div>
   );
 };
 

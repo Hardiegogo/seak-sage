@@ -29,9 +29,7 @@ declare module 'express' {
 }
 
 const generatejwtForUser = (user: IUser): string => {
-  return jwt.sign({ username: user.username }, process.env.USER_SECRET, {
-    expiresIn: '2h',
-  });
+  return jwt.sign({ username: user.username }, process.env.USER_SECRET);
 };
 
 const userSignup = async (req: Request, res: Response) => {
