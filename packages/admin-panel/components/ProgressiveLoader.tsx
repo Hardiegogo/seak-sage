@@ -15,6 +15,7 @@ const ProgressiveLoader: React.FC<Props> = ({ imgSrc }) => {
     const img = new Image();
     img.src = src;
     img.onerror = () => {
+      setLoader(false)
       setError(true);
     };
     img.onload = () => {
@@ -23,21 +24,21 @@ const ProgressiveLoader: React.FC<Props> = ({ imgSrc }) => {
     };
   }, [imgSrc]);
 
-  return loader ? (
+  return !loader ? (
     !error ? (
-      <div className="w-full h-full bg-gray-300 animate-pulse rounded-xl"></div>
+      <NextImage src={imgSrc} alt="gg" className="rounded-t-xl" fill />
     ) : (
       <NextImage
         src={
           'https://res.cloudinary.com/dqqehaaqo/image/upload/v1689867669/default_g8zfom.jpg'
         }
-        className='rounded-t-xl'
+        className="rounded-t-xl"
         alt="gg"
-        fill 
+        fill
       />
     )
   ) : (
-    <NextImage src={imgSrc} alt="gg" className='rounded-t-xl' fill />
+    <div className="w-full h-full bg-gray-300 animate-pulse rounded-xl"></div>
   );
 };
 

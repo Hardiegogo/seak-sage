@@ -1,8 +1,12 @@
+import { useRouter } from 'next/router';
 import { createCourse } from '../../services/courseServices/courseServices';
 import { ICourse } from '../../types';
 import React, { Reducer, useReducer } from 'react';
 
-type ACTIONTYPE = { type: string; payload: string | number | boolean };
+type ACTIONTYPE = {
+  type: 'title' | 'rating' | 'imgLink' | 'description' | 'price' | 'published';
+  payload: string | number | boolean;
+};
 
 const newCourseReducer: Reducer<ICourse, ACTIONTYPE> = (
   state: ICourse,
@@ -40,13 +44,16 @@ const CourseForm: React.FC = () => {
     newCourseReducer,
     defaultCourse
   );
+  const router=useRouter()
   const createCourseHandler: React.MouseEventHandler<
     HTMLButtonElement
   > = async (e) => {
     e.preventDefault();
     try {
       const res = await createCourse(newCourse);
-      console.log(res);
+      if(res.status===201){
+        router.push('/')
+      }
     } catch (error) {
       console.log(error);
     }

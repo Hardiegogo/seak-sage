@@ -5,8 +5,8 @@ import ProgressiveLoader from '../ProgressiveLoader';
 
 const CourseCard = ({ course }: { course: ICourse }) => {
   return (
-    <div className="shadow-md cursor-pointer text-textColor w-52 h-fit rounded-xl hover:bg-bgDark overflow-hidden">
-      <div className="w-full h-32 relative">
+    <div className="shadow-md cursor-pointer text-textColor w-56 h-fit rounded-xl hover:bg-bgDark overflow-hidden">
+      <div className="w-full h-36 relative">
         <ProgressiveLoader imgSrc={course.imgLink} />
       </div>
       <div className="p-2">

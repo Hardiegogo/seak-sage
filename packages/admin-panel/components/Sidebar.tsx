@@ -7,7 +7,7 @@ const priceRange=[1000,2000,3000,4000]
 const Sidebar: React.FC = () => {
   const setCoursesFilter = useSetRecoilState(coursesFiltersState);
   return (
-    <div className="w-1/5  h-[calc(100vh-89px)] border-r border-r-greyVariant text-textColor">
+    <div className="w-1/4 min-w-[240px]  max-w-[260px] h-[calc(100vh-89px)] border-r border-r-greyVariant text-textColor bg-bgDark sticky top-[89px]">
       <div className="m-4 flex justify-between items-center">
         <h2 className="text-2xl font-bold">Filters</h2>
         <h4

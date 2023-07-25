@@ -16,7 +16,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
+        hostname: "**",
       },
     ],
     minimumCacheTTL: 1500000,

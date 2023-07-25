@@ -7,10 +7,9 @@ import CoursesGrid from '../components/courses/CoursesGrid';
 import RequireAuth from '../components/RequireAuth';
 
 export function Index() {
-  
   return (
     <RequireAuth>
-      <main className="flex">
+      <main className="flex h-full">
         <Sidebar />
         <CoursesGrid />
       </main>
