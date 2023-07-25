@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { adminState } from '../../state/atoms/adminState';
 import { useRouter } from 'next/router';
 import { isAxiosError} from 'axios';
-import { loginUser } from '../../services/authServices/authServices';
+import { AuthorisedApi, loginUser } from '../../services/authServices/authServices';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -25,6 +25,7 @@ const LoginForm: React.FC = () => {
           JSON.stringify({ ...res.data.admin, isLoggedIn: true })
         );
         setAdmin({ ...res.data.admin, isLoggedIn: true });
+        AuthorisedApi.defaults.headers['Authorization'] = `Bearer ${res.data.token}`;
         setUsername('');
         setPassword('');
         router.replace('/');

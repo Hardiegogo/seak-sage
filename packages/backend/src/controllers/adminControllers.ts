@@ -11,9 +11,7 @@ interface IAdmin {
 }
 
 const generatejwtForAdmin = (admin: IAdmin): string => {
-  return jwt.sign({ username: admin.username }, process.env.ADMIN_SECRET, {
-    expiresIn: '2h',
-  });
+  return jwt.sign({ username: admin.username }, process.env.ADMIN_SECRET);
 };
 
 const adminSignup = async (req: Request, res: Response) => {

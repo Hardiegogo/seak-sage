@@ -6,7 +6,6 @@ import Navbar from '../components/Navbar';
 export function Signup() {
   return (
     <>
-    <Navbar/>
       <main className="grid place-items-center">
         <SignupForm />
       </main>
