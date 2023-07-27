@@ -44,15 +44,15 @@ const CourseForm: React.FC = () => {
     newCourseReducer,
     defaultCourse
   );
-  const router=useRouter()
+  const router = useRouter();
   const createCourseHandler: React.MouseEventHandler<
     HTMLButtonElement
   > = async (e) => {
     e.preventDefault();
     try {
       const res = await createCourse(newCourse);
-      if(res.status===201){
-        router.push('/')
+      if (res.status === 201) {
+        router.push('/');
       }
     } catch (error) {
       console.log(error);
@@ -96,6 +96,21 @@ const CourseForm: React.FC = () => {
       </div>
       <div className="mt-4">
         <label htmlFor="">
+          Course Description : <br />
+          <textarea
+            className="px-4 py-2 rounded-xl border-primary border-2 outline-none w-full h-32 resize-none"
+            value={newCourse.description}
+            onChange={(e) => {
+              dispatchNewCourse({
+                type: 'description',
+                payload: e.target.value,
+              });
+            }}
+          />
+        </label>
+      </div>
+      <div className="mt-4 flex justify-between">
+        <label htmlFor="">
           Rating : <br />
           <input
             type="number"
@@ -110,23 +125,6 @@ const CourseForm: React.FC = () => {
             }}
           />
         </label>
-      </div>
-      <div className="mt-4">
-        <label htmlFor="">
-          Course Description : <br />
-          <textarea
-            className="px-4 py-2 rounded-xl border-primary border-2 outline-none w-full"
-            value={newCourse.description}
-            onChange={(e) => {
-              dispatchNewCourse({
-                type: 'description',
-                payload: e.target.value,
-              });
-            }}
-          />
-        </label>
-      </div>
-      <div className="mt-4">
         <label htmlFor="">
           Image link : <br />
           <input
@@ -141,37 +139,37 @@ const CourseForm: React.FC = () => {
       </div>
       <div className="mt-4">
         Published :
-        <label htmlFor="">
-          <br />
-          <input
-            type="radio"
-            name="published"
-            id="published"
-            defaultChecked={newCourse.published}
-            onClick={(e) => {
-              dispatchNewCourse({ type: 'published', payload: true });
-            }}
-          />{' '}
-          True
-        </label>
-        <label htmlFor="">
-          <br />
-          <input
-            type="radio"
-            name="published"
-            id="published"
-            defaultChecked={!newCourse.published}
-            onClick={(e) => {
-              dispatchNewCourse({ type: 'published', payload: false });
-            }}
-          />{' '}
-          False
-        </label>
+        <div className="flex gap-4 mt-0">
+          <label htmlFor="">
+            <input
+              type="radio"
+              name="published"
+              id="published"
+              defaultChecked={newCourse.published}
+              onClick={(e) => {
+                dispatchNewCourse({ type: 'published', payload: true });
+              }}
+            />{' '}
+            True
+          </label>
+          <label htmlFor="">
+            <input
+              type="radio"
+              name="published"
+              id="published"
+              defaultChecked={!newCourse.published}
+              onClick={(e) => {
+                dispatchNewCourse({ type: 'published', payload: false });
+              }}
+            />{' '}
+            False
+          </label>
+        </div>
       </div>
       <button
         onClick={createCourseHandler}
         type="submit"
-        className="bg-primary px-3 py-2 rounded-xl text-bgColor hover:opacity-90 w-full"
+        className="bg-primary px-3 py-2 rounded-xl text-bgColor hover:opacity-90 w-full mt-4"
       >
         Create
       </button>

@@ -36,7 +36,11 @@ const adminLogin = async (req: Request, res: Response) => {
     const existingAdmin = await Admin.findOne(admin);
     if (existingAdmin) {
       const token = generatejwtForAdmin(admin);
-      res.json({ message: 'Logged in successfully', token: token,admin:{username:existingAdmin.username,id:existingAdmin._id} });
+      res.json({
+        message: 'Logged in successfully',
+        token: token,
+        admin: { username: existingAdmin.username, id: existingAdmin._id },
+      });
     } else res.status(403).send('User not found');
   } else {
     res.status(403).send('Please enter details correctly');
@@ -79,4 +83,24 @@ const getCourses = async (req: Request, res: Response) => {
   res.json(courses);
 };
 
-export { getCourses, updateCourse, createCourse, adminSignup, adminLogin };
+const deleteCourse = async (req: Request, res: Response) => {
+  try {
+    const course = await Course.deleteOne({ _id: req.params.courseId });
+    res.json({
+      message: 'Successfully deleted',
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'An error occurred while deleting the course',
+    });
+  }
+};
+
+export {
+  getCourses,
+  updateCourse,
+  createCourse,
+  adminSignup,
+  adminLogin,
+  deleteCourse,
+};

@@ -7,19 +7,17 @@ interface Props {
 }
 
 const ProgressiveLoader: React.FC<Props> = ({ imgSrc }) => {
-  const [src, setSrc] = useState(imgSrc);
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const img = new Image();
-    img.src = src;
+    img.src = imgSrc;
     img.onerror = () => {
       setLoader(false)
       setError(true);
     };
     img.onload = () => {
-      setSrc(imgSrc);
       setLoader(false);
     };
   }, [imgSrc]);
