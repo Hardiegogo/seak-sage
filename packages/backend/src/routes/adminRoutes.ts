@@ -2,7 +2,7 @@ import express from "express";
 
 import { Request, Response } from "express";
 import { NextFunction } from "express-serve-static-core";
-import { getCourses, updateCourse, createCourse, adminSignup, adminLogin } from "../controllers/adminControllers";
+import { getCourses, updateCourse, createCourse, adminSignup, adminLogin, deleteCourse } from "../controllers/adminControllers";
 import jwt from "jsonwebtoken";
 import { config } from 'dotenv';
 import path from 'path';
@@ -43,5 +43,7 @@ router.post("/courses", authenticateJwtForAdmin, createCourse);
 router.put("/courses/:courseId", authenticateJwtForAdmin, updateCourse);
 
 router.get("/courses", authenticateJwtForAdmin, getCourses);
+
+router.delete("/courses/:courseId",authenticateJwtForAdmin,deleteCourse)
 
 export default router;

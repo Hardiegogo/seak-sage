@@ -2,10 +2,11 @@ import React from 'react';
 import { ICourse } from '../../types';
 import Image from 'next/image';
 import ProgressiveLoader from '../ProgressiveLoader';
+import Link from 'next/link';
 
 const CourseCard = ({ course }: { course: ICourse }) => {
   return (
-    <div className="shadow-md cursor-pointer text-textColor w-56 h-fit rounded-xl hover:bg-bgDark overflow-hidden">
+    <Link href={`/${course._id}`} className="shadow-md cursor-pointer text-textColor w-56 h-fit rounded-xl hover:bg-bgDark overflow-hidden">
       <div className="w-full h-36 relative">
         <ProgressiveLoader imgSrc={course.imgLink} />
       </div>
@@ -16,7 +17,7 @@ const CourseCard = ({ course }: { course: ICourse }) => {
           <p className='text-sm'>Rating: {course.rating} stars</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
