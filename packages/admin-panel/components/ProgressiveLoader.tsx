@@ -24,7 +24,7 @@ const ProgressiveLoader: React.FC<Props> = ({ imgSrc }) => {
 
   return !loader ? (
     !error ? (
-      <NextImage src={imgSrc} alt="gg" className="rounded-t-xl" fill />
+      <NextImage src={imgSrc} alt="gg" fill />
     ) : (
       <NextImage
         src={

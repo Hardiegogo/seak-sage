@@ -12,13 +12,26 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // colors:{
+      //   bgColor:"#2C394B",
+      //   // bgColor:"#FAFAFA",
+      //   bgDark:"#082032",
+      //   bgDarker:"#EBEBEB",
+      //   textColor:"#F0F0F0",
+      //   lightText:"#B0B0B0",
+      //   primary:"#FF6B6C",
+      //   greyVariant:"#DADAD9",
+      //   secondary:"#5B5F97"
+      // },
       colors:{
-        bgColor:"#FAFAFA",
-        bgDark:"#F5F5F5",
+        bgColor:"#F5FCFF",
+        // bgColor:"#FAFAFA",
+        bgDark:"#D4E5FF",
         bgDarker:"#EBEBEB",
-        textColor:"#1E1E24",
+        textColor:"#1c3d5a",
+        lightText:"#4d6c82",
         primary:"#FF6B6C",
-        greyVariant:"#DADAD9",
+        greyVariant:"#AEBFD6",
         secondary:"#5B5F97"
       }
     },

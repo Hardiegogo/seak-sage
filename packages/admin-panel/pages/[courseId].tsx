@@ -71,7 +71,7 @@ const CoursePage = () => {
                 <ProgressiveLoader imgSrc={selectedCourse.imgLink} />
               </div>
               <div className="flex justify-between mt-2 items-center">
-                <h1 className="text-2xl font-medium">{selectedCourse.title}</h1>
+                <h1 className="text-2xl font-bold">{selectedCourse.title}</h1>
                 <p className="text-xl">₹{selectedCourse.price}</p>
               </div>
               <div className="mt-2">

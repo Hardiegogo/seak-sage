@@ -31,7 +31,7 @@ const CoursesGrid: React.FC = () => {
   }, []);
 
   return (
-    <main className="p-8 text-textColor flex flex-wrap gap-12 h-fit w-fit">
+    <main className="p-8 px-12 text-textColor flex flex-wrap gap-16 h-fit w-fit">
       {filteredCourses?.length
         ? filteredCourses.map((course) => (
             <CourseCard key={course._id} course={course} />

@@ -9,7 +9,7 @@ import RequireAuth from '../components/RequireAuth';
 export function Index() {
   return (
     <RequireAuth>
-      <main className="flex h-full">
+      <main className="flex h-full bg-bgColor p-0">
         <Sidebar />
         <CoursesGrid />
       </main>
