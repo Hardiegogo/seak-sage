@@ -1,10 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 html {
   -webkit-text-size-adjust: 100%;
-  font-family: 'Montserrat';
+  font-family: 'Poppins', sans-serif;
   line-height: 1.5;
   tab-size: 4;
   scroll-behavior: smooth;

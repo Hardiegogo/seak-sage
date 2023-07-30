@@ -28,26 +28,26 @@ const Navbar: React.FC = () => {
   useOutsideClick(menuRef, secondRef, closeMenu);
 
   return (
-    <header className="bg-bgDark sticky top-0 z-10">
+    <header className=" sticky top-0 z-10 bg-bgColor">
       <nav className="flex justify-between p-3 border-b-greyVariant border-b items-center ">
         <div className="flex gap-1 items-center relative">
           <Image src={logo} alt="logo" width={50} height={50} className="m-2" />
-          <div className="bg-primary min-w-[4px] min-h-[full] h-16 rounded-sm border-none relative"></div>
-          <h1 className="text-3xl text-primary font-medium m-2">seekSage</h1>
+          {/* <div className="bg-textColor min-w-[4px] min-h-[full] h-16 rounded-sm border-none relative"></div> */}
+          <h1 className="text-[26px] text-textColor font-bold">seekSage</h1>
         </div>
         <div className="flex gap-3">
           {admin.isLoggedIn ? (
             <div className="relative">
               <div
-                className="p-2 hover:bg-bgDarker rounded-full cursor-pointer"
+                className="p-2 hover:bg-bgDark rounded-full cursor-pointer"
                 onClick={(event) => setIsMenuOptions(!isMenuOptions)}
                 ref={secondRef}
               >
-                <RxHamburgerMenu size={25} className="text-primary" />
+                <RxHamburgerMenu size={25} className="text-textColor" />
               </div>
               {isMenuOptions && (
                 <div
-                  className="flex flex-col absolute bg-bgColor border border-greyVariant right-4 top-10 z-10 w-40 rounded-lg"
+                  className="flex flex-col absolute bg-bgColor border text-textColor border-greyVariant right-4 top-10 z-10 w-40 rounded-lg"
                   ref={menuRef}
                 >
                   <Link
