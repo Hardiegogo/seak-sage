@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { adminState } from '../../state/atoms/adminState';
 import { useRouter } from 'next/router';
-import { isAxiosError} from 'axios';
-import { AuthorisedApi, loginUser } from '../../services/authServices/authServices';
+import { isAxiosError } from 'axios';
+import {
+  AuthorisedApi,
+  loginUser,
+} from '../../services/authServices/authServices';
+import { Button } from '@seek-sage/ui';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -25,7 +29,9 @@ const LoginForm: React.FC = () => {
           JSON.stringify({ ...res.data.admin, isLoggedIn: true })
         );
         setAdmin({ ...res.data.admin, isLoggedIn: true });
-        AuthorisedApi.defaults.headers['Authorization'] = `Bearer ${res.data.token}`;
+        AuthorisedApi.defaults.headers[
+          'Authorization'
+        ] = `Bearer ${res.data.token}`;
         setUsername('');
         setPassword('');
         router.replace('/');
@@ -68,12 +74,11 @@ const LoginForm: React.FC = () => {
         />
       </div>
       {error.length ? <span className="text-red-700 ">{error}</span> : null}
-      <button
-        className="mt-6 bg-primary px-3 py-2 rounded-xl text-bgColor hover:opacity-90 w-full"
-        onClick={clickHandler}
-      >
-        Login
-      </button>
+      <div className="mt-6">
+        <Button onClick={clickHandler} type="primary">
+          Login
+        </Button>
+      </div>
     </form>
   );
 };
