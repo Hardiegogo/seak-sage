@@ -43,7 +43,7 @@
   },
   "workspaceLayout": {
     "appsDir": "packages",
-    "libsDir": "packages"
+    "libsDir": "libs"
   },
   "generators": {
     "@nx/react": {

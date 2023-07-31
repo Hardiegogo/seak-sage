@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
       <div className="m-4 flex justify-between items-center">
         <h2 className="text-2xl font-bold">Filters</h2>
         <h4
-          className="cursor-pointer underline"
+          className="cursor-pointer underline text-textColor font-semibold"
           onClick={() =>
             setCoursesFilter({
               rating: 0,

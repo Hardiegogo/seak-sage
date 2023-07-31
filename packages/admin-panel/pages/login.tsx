@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 export function Login() {
   return (
     <>
-      <main className="grid place-items-center">
+      <main className="grid place-items-center pt-20">
         <LoginForm />
       </main>
     </>
