@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { createCourse } from '../../services/courseServices/courseServices';
 import { ICourse } from '../../types';
 import React, { Reducer, useReducer } from 'react';
+import { Button } from '@seek-sage/ui';
 
 type ACTIONTYPE = {
   type: 'title' | 'rating' | 'imgLink' | 'description' | 'price' | 'published';
@@ -166,13 +167,11 @@ const CourseForm: React.FC = () => {
           </label>
         </div>
       </div>
-      <button
-        onClick={createCourseHandler}
-        type="submit"
-        className="bg-primary px-3 py-2 rounded-xl text-bgColor hover:opacity-90 w-full mt-4"
-      >
-        Create
-      </button>
+      <div className="mt-4">
+        <Button onClick={createCourseHandler} type="primary">
+          Create
+        </Button>
+      </div>
     </form>
   );
 };
