@@ -11,6 +11,7 @@ import {
   editCourse,
 } from '../services/courseServices/courseServices';
 import EditModal from '../components/courses/EditModal';
+import Stars from '../components/Stars';
 
 const CoursePage = () => {
   const router = useRouter();
@@ -63,7 +64,7 @@ const CoursePage = () => {
   }, []);
   return (
     <RequireAuth>
-      <main className="grid place-items-center mt-8 bg-bgColor">
+      <main className=" grid place-items-center pt-8 bg-bgColor text-textColor">
         {selectedCourse ? (
           <div className="w-[768px] min-w-[50%] flex gap-8">
             <div className="w-[60%] flex-grow">
@@ -75,13 +76,12 @@ const CoursePage = () => {
                 <p className="text-xl">₹{selectedCourse.price}</p>
               </div>
               <div className="mt-2">
-                <div className="flex justify-between">
-                  <h1 className="text-lg">Course description</h1>
+                <div className="flex justify-end">
                   <p className="text-md">
-                    Rating:{selectedCourse.rating} stars
+                    <Stars rating={selectedCourse.rating}/>
                   </p>
                 </div>
-                <p className="mt-2 text-base">{selectedCourse.description}</p>
+                <p className="mt-2 text-base text-lightText">{selectedCourse.description}</p>
               </div>
             </div>
             <div className="flex flex-col items-start gap-6 flex-grow-0">

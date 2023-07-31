@@ -7,7 +7,7 @@ const ProtectedLayout = ({
   children: React.JSX.Element | string;
 }) => {
   return (
-    <div>
+    <div className='bg-bgColor min-h-screen'>
       <Navbar />
       {children}
     </div>

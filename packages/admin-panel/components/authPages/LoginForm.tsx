@@ -43,7 +43,7 @@ const LoginForm: React.FC = () => {
     }
   };
   return (
-    <form className="p-4 border border-greyVariant mt-20 text-textColor w-80">
+    <form className="p-4 border border-greyVariant text-textColor w-80 h-fit">
       <h2 className="text-center text-2xl">Login</h2>
       <div className="flex flex-col mt-3">
         <label htmlFor="username">Username:</label>

@@ -26,11 +26,11 @@ module.exports = {
       colors:{
         bgColor:"#F5FCFF",
         // bgColor:"#FAFAFA",
-        bgDark:"#D4E5FF",
-        bgDarker:"#EBEBEB",
-        textColor:"#1c3d5a",
+        bgDark: "#D9EBFF",
+        bgDarker: "#C2D9FF",
+        textColor:"#273e5c",
         lightText:"#4d6c82",
-        primary:"#FF6B6C",
+        primary:"#305d8c",
         greyVariant:"#AEBFD6",
         secondary:"#5B5F97"
       }
