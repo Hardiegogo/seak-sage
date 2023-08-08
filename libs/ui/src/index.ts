@@ -2,3 +2,5 @@
 
 export * from './lib/ui';
 export {default as Button} from './lib/components/Button'
+export {default as Navbar} from './lib/user-panel/Navbar'
+export {default as Hero} from './lib/user-panel/Hero'

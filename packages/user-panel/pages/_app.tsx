@@ -8,7 +8,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Welcome to user-panel!</title>
       </Head>
-      <main className="app">
+      <main className="app bg-bgColor min-h-screen">
         <Component {...pageProps} />
       </main>
     </>
