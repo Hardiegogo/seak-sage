@@ -1,13 +1,10 @@
 import styles from './index.module.scss';
-import { Hero, Navbar } from '@seek-sage/ui';
+import { Footer, Hero, Navbar } from '@seek-sage/ui';
 export function Index() {
   return (
-    <div>
-      <Navbar />
-      <main className='w-5/6 mx-auto'>
-        <Hero/>
-      </main>
-    </div>
+    <main className="w-5/6 mx-auto">
+      <Hero />
+    </main>
   );
 }
 

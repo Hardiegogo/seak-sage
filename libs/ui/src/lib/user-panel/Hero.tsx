@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import HeroSrc from '../assets/H.svg';
 import Button from '../components/Button';
+import Link from 'next/link';
 
 const Hero = () => {
   return (
@@ -9,12 +10,15 @@ const Hero = () => {
       <div className="flex-1 grid place-items-center">
         <div>
           <h1 className="text-textColor text-6xl font-extrabold">
-          Learn Without Boundaries
+            Learn Without Boundaries
           </h1>
           <div className="flex gap-2 mt-8">
-            <Button type="primary" className="py-4 text-lg font-semibold">
-              Explore courses
-            </Button>
+            <Link href="/courses" className='w-full'>
+              <Button type="primary" className="py-4 text-lg font-semibold">
+                Explore courses
+              </Button>
+            </Link>
+
             <Button type="normal" className="py-4 text-lg font-semibold">
               Become a seller
             </Button>

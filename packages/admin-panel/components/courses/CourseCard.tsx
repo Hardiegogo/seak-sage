@@ -3,7 +3,7 @@ import { ICourse } from '../../types';
 import Image from 'next/image';
 import ProgressiveLoader from '../ProgressiveLoader';
 import Link from 'next/link';
-import Stars from '../Stars';
+import { Stars } from '@seek-sage/ui';
 
 const CourseCard = ({ course }: { course: ICourse }) => {
   return (

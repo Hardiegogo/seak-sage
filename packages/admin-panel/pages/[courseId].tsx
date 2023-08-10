@@ -4,14 +4,14 @@ import RequireAuth from '../components/RequireAuth';
 import { useRecoilValue } from 'recoil';
 import { coursesState } from '../state/atoms/coursesState';
 import { ICourse } from '../types';
-import Image from 'next/image';
 import ProgressiveLoader from '../components/ProgressiveLoader';
 import {
   deleteCourse,
   editCourse,
 } from '../services/courseServices/courseServices';
 import EditModal from '../components/courses/EditModal';
-import Stars from '../components/Stars';
+import { Stars } from '@seek-sage/ui';
+
 
 const CoursePage = () => {
   const router = useRouter();
