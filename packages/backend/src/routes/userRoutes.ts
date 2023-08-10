@@ -45,7 +45,7 @@ router.post('/signup', userSignup);
 
 router.post('/login', userLogin);
 
-router.get('/courses', authenticateJwtForUser, getAllCourses);
+router.get('/courses', getAllCourses);
 
 router.post('/courses/:courseId', authenticateJwtForUser, purchaseCourse);
 
