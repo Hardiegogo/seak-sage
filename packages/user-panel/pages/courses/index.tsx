@@ -1,14 +1,14 @@
 import { Sidebar } from '@seek-sage/ui';
 import CoursesGrid from '../../components/courses/CoursesGrid';
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { coursesFiltersState } from '../../state/atoms/coursesFilterState';
 
 function Index() {
-  const setCoursesFilter=useSetRecoilState(coursesFiltersState)
+  const [filters,setCoursesFilter] = useRecoilState(coursesFiltersState);
   return (
     <main className="flex">
-      <Sidebar setFilter={setCoursesFilter}/>
+      <Sidebar setFilter={setCoursesFilter} filters={filters} publishedOptions={false}/>
       <CoursesGrid />
     </main>
   );

@@ -12,7 +12,17 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+    minimumCacheTTL: 1500000,
+  },
 };
+
 
 const plugins = [
   // Add more Next.js plugins to this list if needed.

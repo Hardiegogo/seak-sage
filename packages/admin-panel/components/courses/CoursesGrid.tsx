@@ -1,17 +1,16 @@
 import { fetchCourses } from '../../services/courseServices/courseServices';
 import { coursesState } from '../../state/atoms/coursesState';
 import React, { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CourseCard from './CourseCard';
 import { useRouter } from 'next/router';
 import axios, { AxiosError } from 'axios';
 import { filteredCoursesState } from '../../state/selectors/filteredCoursesState';
 
 const CoursesGrid: React.FC = () => {
-  const [courses, setCourses] = useRecoilState(coursesState);
+  const setCourses= useSetRecoilState(coursesState);
   const filteredCourses = useRecoilValue(filteredCoursesState);
   const router = useRouter();
-  console.log(courses);
   console.log(filteredCourses);
   useEffect(() => {
     (async () => {

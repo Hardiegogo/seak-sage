@@ -15,4 +15,4 @@ const Stars:React.FC<{rating:number , filled?:boolean}> =({rating , filled})=> {
   )
 }
 
-export default Stars
+export default React.memo(Stars)

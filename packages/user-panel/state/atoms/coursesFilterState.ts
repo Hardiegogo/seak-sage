@@ -3,8 +3,8 @@ import { atom } from "recoil";
 
 const defaultFilters:ICourseFilters={
     rating:0,
-    price:5000,
-    published:null,
+    price:0,
+    published:true,
     priceLowToHigh:null
 }
 

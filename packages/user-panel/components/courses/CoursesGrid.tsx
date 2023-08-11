@@ -4,12 +4,13 @@ import { coursesState } from '../../state/atoms/coursesState';
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { UserCourseCard } from '@seek-sage/ui';
+import { filteredCoursesState } from '../../state/selectors/filteredCoursesState';
 
 const CoursesGrid = () => {
-  const courses = useRecoilValue(coursesState);
+  const filteredCourses = useRecoilValue(filteredCoursesState);
   const { coursesLoading } = useCourses();
   return (
-    <main className='w-full'>
+    <main className="p-8 px-12 ">
       {coursesLoading ? (
         <div className="w-full h-full grid place-items-center">
           <svg
@@ -18,9 +19,11 @@ const CoursesGrid = () => {
           ></svg>
         </div>
       ) : (
-        courses.map((course) => (
-          <UserCourseCard key={course._id} course={course} />
-        ))
+        <div className='text-textColor flex flex-wrap gap-16 h-fit w-fit'>
+          {filteredCourses.map((course) => (
+            <UserCourseCard key={course._id} course={course} />
+          ))}
+        </div>
       )}
     </main>
   );
