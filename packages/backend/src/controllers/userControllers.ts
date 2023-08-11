@@ -45,7 +45,7 @@ const userSignup = async (req: Request, res: Response) => {
     const authToken = generatejwtForUser(user);
     res
       .status(201)
-      .json({ message: 'User created successfully', token: authToken });
+      .json({ message: 'User created successfully', token: authToken});
   }
 };
 
@@ -65,7 +65,7 @@ const userLogin = async (req: Request, res: Response) => {
 
 const getAllCourses = async (req: Request, res: Response) => {
   // logic to list all courses
-  const courses = await Course.find({});
+  const courses = await Course.find({published:true});
   res.json(courses);
 };
 

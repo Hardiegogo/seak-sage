@@ -12,7 +12,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
       </Head>
       <RecoilRoot>
         <AppLayout>
-          <main className="h-[calc(100vh-134px)]">
+          <main className="min-h-[calc(100vh-134px)] bg-bgColor">
             <Component {...pageProps} />
           </main>
         </AppLayout>
