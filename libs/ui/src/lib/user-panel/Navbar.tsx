@@ -13,17 +13,16 @@ interface IUser {
 }
 
 interface NavProps {
-  user:IUser,
-  logoutUser:() => void
+  user: IUser;
+  logoutUser: () => void;
 }
 
-
-const Navbar: React.FC<NavProps> = ({ user,logoutUser }) => {
+const Navbar: React.FC<NavProps> = ({ user, logoutUser }) => {
   const [isUserDropDown, setIsUserDropDown] = useState(false);
-  const logoutHandler=()=>{
-    setIsUserDropDown(false)
-    logoutUser()
-  }
+  const logoutHandler = () => {
+    setIsUserDropDown(false);
+    logoutUser();
+  };
   return (
     <header className="sticky top-0 z-10 bg-bgColor text-textColor h-[77px]">
       <nav className="flex justify-between p-3 border-b-greyVariant border-b items-center">
@@ -39,14 +38,30 @@ const Navbar: React.FC<NavProps> = ({ user,logoutUser }) => {
               Courses
             </Link>
 
-            <div className="flex items-center gap-0 cursor-pointer" onClick={()=>setIsUserDropDown(!isUserDropDown)}>
+            <div
+              className="flex items-center gap-0 cursor-pointer"
+              onClick={() => setIsUserDropDown(!isUserDropDown)}
+            >
               <BiUser size={25} />
               <BiSolidDownArrow size={15} />
             </div>
-            <div className='z-10'>
+            <div className="z-10">
               {isUserDropDown ? (
-                <div className="absolute right-5 top-8 border border-greyVariant rounded-lg">
-                  <p className="text-lg px-4 py-2 hover:bg-bgDark rounded-lg cursor-pointer bg-bgColor" onClick={logoutHandler}>Logout</p>
+                <div className="absolute right-5 top-8 border border-greyVariant rounded-lg w-full">
+                  <Link href="/myCourses">
+                    <p
+                      className="text-lg px-4 py-2 hover:bg-bgDark rounded-lg cursor-pointer bg-bgColor"
+                      onClick={() => setIsUserDropDown(false)}
+                    >
+                      My courses
+                    </p>
+                  </Link>
+                  <p
+                    className="text-lg px-4 py-2 hover:bg-bgDark rounded-lg cursor-pointer bg-bgColor"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </p>
                 </div>
               ) : (
                 ''
@@ -71,4 +86,4 @@ const Navbar: React.FC<NavProps> = ({ user,logoutUser }) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(Navbar), { ssr: false });;
+export default dynamic(() => Promise.resolve(Navbar), { ssr: false });
