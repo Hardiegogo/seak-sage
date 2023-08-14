@@ -2,6 +2,7 @@ export interface IUser {
   username: string;
   id: string;
   isLoggedIn: boolean;
+  purchasedCourses?:ICourse[]
 }
 
 export interface ICourse {

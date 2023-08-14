@@ -4,7 +4,8 @@ import { atom } from "recoil";
 const defaultState={
     username:"",
     id:"",
-    isLoggedIn:false      
+    isLoggedIn:false,
+    purchasedCourses:[]      
 }
 
 export const userState=atom<IUser>({

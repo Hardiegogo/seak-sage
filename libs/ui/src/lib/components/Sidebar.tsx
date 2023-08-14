@@ -33,7 +33,6 @@ const Sidebar: React.FC<{
   filters: ICourseFilters;
   publishedOptions: boolean;
 }> = ({ setFilter, filters, publishedOptions }) => {
-  console.log(filters.price,Number(reversePriceRange[filters.price.toString()]))
   return (
     <div className="w-1/4 min-w-[280px]  max-w-[280px] h-[calc(100vh-77px)] border-r border-r-greyVariant text-textColor  sticky top-[77px]">
       <div className="m-4 flex justify-between items-center">

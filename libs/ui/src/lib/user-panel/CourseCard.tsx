@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../components/Button';
 import ProgressiveImage from '../components/ProgressiveImage';
 import Stars from '../components/Stars';
+import { AxiosResponse } from 'axios';
 
 interface ICourse {
   title: string;
@@ -13,13 +14,30 @@ interface ICourse {
   _id?: string;
 }
 
-const CourseCard: React.FC<{course:ICourse}> = ({course}) => {
-  return <div className=' shadow-md w-[300px]'>
-    <div className='w-[300px] max-h-[160px] overflow-hidden grid place-items-center bg-bgColor'>
-        <ProgressiveImage imgSrc={course.imgLink}/>
-    </div>
-    <div className="p-4 py-3">
-        <h2 className="text-[22px] font-bold text-textColor ">{course.title}</h2>
+const CourseCard: React.FC<{
+  course: ICourse;
+  buyCourse?: (courseId: string) => Promise<AxiosResponse>;
+  isMyCourse?: boolean;
+}> = ({ course, buyCourse, isMyCourse }) => {
+  const buyHandler: React.MouseEventHandler<HTMLButtonElement> = async () => {
+    try {
+      if (buyCourse) {
+        const res = await buyCourse(course._id as string);
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return (
+    <div className=" shadow-md w-[300px]">
+      <div className="w-[300px] max-h-[160px] overflow-hidden grid place-items-center bg-bgColor">
+        <ProgressiveImage imgSrc={course.imgLink} />
+      </div>
+      <div className="p-4 py-3">
+        <h2 className="text-[22px] font-bold text-textColor ">
+          {course.title}
+        </h2>
         <p className="text-sm text-lightText line-clamp-3 ">
           {course.description}
         </p>
@@ -28,10 +46,17 @@ const CourseCard: React.FC<{course:ICourse}> = ({course}) => {
           <Stars rating={course.rating} />
         </div>
       </div>
-    <div className='p-4 pt-0'>
-    <Button type='primary'>Buy now</Button>
+      {!isMyCourse ? (
+        <div className="p-4 pt-0">
+          <Button type="primary" onClick={buyHandler}>
+            Buy now
+          </Button>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
-  </div>;
+  );
 };
 
 export default CourseCard;

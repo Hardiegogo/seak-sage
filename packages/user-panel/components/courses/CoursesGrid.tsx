@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { UserCourseCard } from '@seek-sage/ui';
 import { filteredCoursesState } from '../../state/selectors/filteredCoursesState';
+import { buyCourse } from '../../services/courseServices/coursesServices';
 
 const CoursesGrid = () => {
   const filteredCourses = useRecoilValue(filteredCoursesState);
@@ -19,9 +20,13 @@ const CoursesGrid = () => {
           ></svg>
         </div>
       ) : (
-        <div className='text-textColor flex flex-wrap gap-16 h-fit w-fit'>
+        <div className="text-textColor flex flex-wrap gap-16 h-fit w-fit">
           {filteredCourses.map((course) => (
-            <UserCourseCard key={course._id} course={course} />
+            <UserCourseCard
+              key={course._id}
+              course={course}
+              buyCourse={buyCourse}
+            />
           ))}
         </div>
       )}

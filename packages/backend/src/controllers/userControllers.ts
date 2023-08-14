@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/userModel';
 import Course from '../models/courseModel';
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 
 interface IUser {
   username: string;
@@ -45,7 +45,7 @@ const userSignup = async (req: Request, res: Response) => {
     const authToken = generatejwtForUser(user);
     res
       .status(201)
-      .json({ message: 'User created successfully', token: authToken});
+      .json({ message: 'User created successfully', token: authToken });
   }
 };
 
@@ -56,7 +56,11 @@ const userLogin = async (req: Request, res: Response) => {
     const existingUser = await User.findOne(user);
     if (existingUser) {
       const token = generatejwtForUser(user);
-      res.json({ message: 'Logged in successfully', token: token ,user:{username:existingUser.username,id:existingUser._id}});
+      res.json({
+        message: 'Logged in successfully',
+        token: token,
+        user: { username: existingUser.username, id: existingUser._id },
+      });
     } else res.status(403).send('User not found');
   } else {
     res.status(403).send('Please enter details correctly');
@@ -65,7 +69,7 @@ const userLogin = async (req: Request, res: Response) => {
 
 const getAllCourses = async (req: Request, res: Response) => {
   // logic to list all courses
-  const courses = await Course.find({published:true});
+  const courses = await Course.find({ published: true });
   res.json(courses);
 };
 
@@ -75,9 +79,13 @@ const purchaseCourse = async (req: Request, res: Response) => {
   const course: ICourse = await Course.findById(courseId);
   if (course) {
     const user = await User.findOne({ username: req.user.username });
-    user.purchasedCourses.push(course.ObjectId);
-    await user.save();
-    res.json({ message: 'Course purchased successfully' });
+    if (user.purchasedCourses.includes(course._id as any)) {
+      res.status(403).send({ message: 'Course already purchased' });
+    } else {
+      user.purchasedCourses.push(course._id as any);
+      await user.save();
+      res.json({ message: 'Course purchased successfully' });
+    }
   } else {
     res.status(404).json({ message: 'Course not found' });
   }
