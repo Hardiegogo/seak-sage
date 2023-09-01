@@ -9,7 +9,7 @@ export const signupUser = async (userDetails: {
   const { username, password } = userDetails;
   const response = await axios({
     method: 'POST',
-    url: `${process.env.NEXT_PUBLIC_DEV_BACKEND}/user/signup`,
+    url: `/api/auth/signup`,
     data: {
       username,
       password,
@@ -43,8 +43,6 @@ export const AuthorisedApi = axios.create({
 });
 
 export const logoutUser = async (setUser:SetterOrUpdater<IUser>) => {
-  localStorage.removeItem('user');
-  localStorage.removeItem('token');
   setUser({
     username: '',
     id: '',

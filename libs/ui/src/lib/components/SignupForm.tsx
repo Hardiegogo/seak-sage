@@ -34,17 +34,17 @@ const SignupForm = ({
     try {
       setError('');
       const res = await signupUser({ username, password });
-      if (res.status === 201) {
-        localStorage.setItem('token', JSON.stringify(res.data.token));
-        localStorage.setItem(
-          'user',
-          JSON.stringify({ ...res.data.user, isLoggedIn: true })
-        );
-        setUser({ ...res.data.user, isLoggedIn: true });
-        setUsername('');
-        setPassword('');
-        router.replace('/');
-      }
+      // if (res.status === 201) {
+      //   localStorage.setItem('token', JSON.stringify(res.data.token));
+      //   localStorage.setItem(
+      //     'user',
+      //     JSON.stringify({ ...res.data.user, isLoggedIn: true })
+      //   );
+      //   setUser({ ...res.data.user, isLoggedIn: true });
+      //   setUsername('');
+      //   setPassword('');
+      //   router.replace('/');
+      // }
     } catch (error) {
       setUsername('');
       setPassword('');

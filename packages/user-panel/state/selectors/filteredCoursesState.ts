@@ -44,7 +44,7 @@ export const filteredCoursesState = selector<ICourse[]>({
   get: ({ get }) => {
     const courses = get(coursesState);
     const filters = get(coursesFiltersState);
-    const filteredCourses = courses.filter((course) => {
+    const filteredCourses = courses?.filter((course) => {
       return (
         filterBasedOnPriceRange(course, filters.price) &&
         filterBasedonPublishStatus(course, filters.published) &&

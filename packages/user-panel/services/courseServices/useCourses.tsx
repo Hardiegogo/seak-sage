@@ -6,13 +6,11 @@ import { useSetRecoilState } from 'recoil';
 function useCourses() {
   const setCourses = useSetRecoilState(coursesState);
   const [loading,setLoading]=useState(true)
-  console.log('gg')
   useEffect(() => {
     (async () => {
-      console.log('running api');
       try {
         const res = await axios.get(
-          process.env.NEXT_PUBLIC_DEV_BACKEND + '/user/courses'
+          'api/courses'
         );
         if (res.status === 200) {
           setLoading(false)

@@ -2,7 +2,8 @@ import React from 'react';
 import Button from '../components/Button';
 import ProgressiveImage from '../components/ProgressiveImage';
 import Stars from '../components/Stars';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, isAxiosError } from 'axios';
+import { signIn } from 'next-auth/react';
 
 interface ICourse {
   title: string;
@@ -23,10 +24,14 @@ const CourseCard: React.FC<{
     try {
       if (buyCourse) {
         const res = await buyCourse(course._id as string);
-        console.log(res);
       }
     } catch (error) {
       console.log(error);
+      if (isAxiosError(error)) {
+        if (error.request.status === 401) {
+          return signIn();
+        }
+      }
     }
   };
   return (
