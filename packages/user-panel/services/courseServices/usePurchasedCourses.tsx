@@ -1,7 +1,6 @@
 import { userState } from '../../state/atoms/userState';
 import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { AuthorisedApi } from '../userServices/userServices';
 import axios from 'axios';
 
 const usePurchasedCourses = () => {

@@ -3,9 +3,7 @@ import React,{useEffect} from 'react';
 import { useRecoilState } from 'recoil';
 import { userState } from '../state/atoms/userState';
 import {
-  AuthorisedApi,
   loginUser,
-  signupUser,
 } from '../services/userServices/userServices';
 
 const Login = () => {
@@ -27,7 +25,6 @@ const Login = () => {
       <UserLoginForm
         setUser={setUser}
         loginUser={loginUser}
-        AuthorisedApi={AuthorisedApi}
       />
     </main>
   );

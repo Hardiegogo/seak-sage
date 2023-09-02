@@ -1,8 +1,8 @@
 import React, { useReducer, Reducer } from 'react';
 import { ICourse } from '../../types';
 import { useRouter } from 'next/router';
-import { editCourse } from '../../services/courseServices/courseServices';
 import { RxCross2 } from 'react-icons/rx';
+import axios from 'axios';
 
 type ACTIONTYPE = {
   type: 'title' | 'rating' | 'imgLink' | 'description' | 'price' | 'published';
@@ -45,7 +45,7 @@ const EditModal: React.FC<{
   ) => {
     e.preventDefault();
     try {
-      const res = await editCourse(selectedCourse);
+      const res = await axios.put(`/api/courses/${selectedCourse?._id}`,{...selectedCourse});
       if (res.status === 200) {
         router.replace('/');
       }

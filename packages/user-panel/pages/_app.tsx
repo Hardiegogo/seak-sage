@@ -6,6 +6,7 @@ import { RecoilEnv, RecoilRoot, useSetRecoilState } from 'recoil';
 import { SessionProvider, getSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { userState } from '../state/atoms/userState';
+import { IUser } from '../types';
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
 
@@ -25,7 +26,7 @@ const InitUser=()=>{
         setUser({
           ...session?.user,
           isLoggedIn:true
-        })
+        } as IUser)
       }
     })()
   },[])

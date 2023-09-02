@@ -1,5 +1,4 @@
 import React from 'react';
-import Sidebar from '../../components/Sidebar';
 import RequireAuth from '../../components/RequireAuth';
 import CourseForm from '../../components/courses/CourseForm';
 

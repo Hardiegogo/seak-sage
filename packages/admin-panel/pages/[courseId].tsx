@@ -5,12 +5,10 @@ import { useRecoilValue } from 'recoil';
 import { coursesState } from '../state/atoms/coursesState';
 import { ICourse } from '../types';
 import ProgressiveLoader from '../components/ProgressiveLoader';
-import {
-  deleteCourse,
-  editCourse,
-} from '../services/courseServices/courseServices';
 import EditModal from '../components/courses/EditModal';
 import { Stars } from '@seek-sage/ui';
+import axios from 'axios';
+import { useToasts } from '../state/context/ToastContext';
 
 
 const CoursePage = () => {
@@ -18,12 +16,13 @@ const CoursePage = () => {
   const courses = useRecoilValue(coursesState);
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null);
   const [isEdit, setIsEdit] = useState(false);
+  const {addSuccess}=useToasts()
 
   const deleteHandler: React.MouseEventHandler<
     HTMLButtonElement
   > = async () => {
     try {
-      const res = await deleteCourse(selectedCourse?._id as string);
+      const res = await axios.delete(`/api/courses/${selectedCourse?._id as string}`);
       if (res.status === 200) {
         router.replace('/');
       }
@@ -36,11 +35,12 @@ const CoursePage = () => {
     HTMLButtonElement
   > = async () => {
     try {
-      const res = await editCourse({
+      const res = await axios.put(`/api/courses/${selectedCourse?._id}`,{
         ...selectedCourse,
         published: !selectedCourse?.published,
       } as ICourse);
       if (res.status === 200) {
+        await addSuccess("Course published successfully")
         router.replace('/');
       }
     } catch (error) {
@@ -63,7 +63,6 @@ const CoursePage = () => {
     }
   }, []);
   return (
-    <RequireAuth>
       <main className=" grid place-items-center pt-8 bg-bgColor text-textColor">
         {selectedCourse ? (
           <div className="w-[768px] min-w-[50%] flex gap-8">
@@ -126,7 +125,6 @@ const CoursePage = () => {
           <EditModal course={selectedCourse as ICourse} setIsEdit={setIsEdit} />
         )}
       </main>
-    </RequireAuth>
   );
 };
 

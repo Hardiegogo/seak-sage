@@ -4,12 +4,13 @@ import logo from '../assets/seekSage-1.png';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { adminState } from '../state/atoms/adminState';
-import { loginUser, logoutUser } from '../services/authServices/authServices';
+import { logoutUser } from '../services/authServices/authServices';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import useOutsideClick from '../utils/useOutsideClick';
 import { Button } from '@seek-sage/ui';
+import { signIn, signOut } from 'next-auth/react';
 
 const Navbar: React.FC = () => {
   const [admin, setAdmin] = useRecoilState(adminState);
@@ -17,11 +18,12 @@ const Navbar: React.FC = () => {
   const menuRef = useRef(null);
   const secondRef = useRef(null);
   const router = useRouter();
+  
 
   const logoutHandler = () => {
     closeMenu();
+    signOut()
     logoutUser(setAdmin);
-    router.replace('/login');
   };
 
   const closeMenu = () => setIsMenuOptions(false);
@@ -34,7 +36,7 @@ const Navbar: React.FC = () => {
         <div className="flex gap-1 items-center relative">
           <Image src={logo} alt="logo" width={50} height={50} className="m-2" />
           {/* <div className="bg-textColor min-w-[4px] min-h-[full] h-16 rounded-sm border-none relative"></div> */}
-          <h1 className="text-[26px] text-primary font-bold">seekSage</h1>
+          <Link href="/" className="text-[26px] text-primary font-bold">seekSage</Link>
         </div>
         <div className="flex gap-3">
           {admin.isLoggedIn ? (
@@ -76,9 +78,7 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <>
-              <Link href="/login">
-                <Button type="normal">Login</Button>
-              </Link>
+              <Button type="normal" onClick={()=>signIn()}>Login</Button>
               <Link href="/signup">
                 <Button type="primary">Signup</Button>
               </Link>

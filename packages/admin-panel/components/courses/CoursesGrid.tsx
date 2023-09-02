@@ -15,7 +15,7 @@ const CoursesGrid: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetchCourses();
+        const res = await axios.get('/api/courses');
         setCourses(res.data);
       } catch (error) {
         if (axios.isAxiosError(error)) {

@@ -12,15 +12,15 @@ interface IUser {
 
 const LoginForm: React.FC<{
   setUser: SetterOrUpdater<IUser>;
-  AuthorisedApi: AxiosInstance;
-  loginUser: ({
+  AuthorisedApi?: AxiosInstance;
+  loginUser?: ({
     username,
     password,
   }: {
     username: string;
     password: string;
   }) => Promise<AxiosResponse<any, any>>;
-}> = ({ setUser, loginUser, AuthorisedApi }) => {
+}> = ({ setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
@@ -46,13 +46,13 @@ const LoginForm: React.FC<{
       //   setPassword('');
       //   router.replace('/');
       // }
-      const res=await signIn("credentials",{username, password,redirect:true, callbackUrl:'/'})
+      const res=await signIn("credentials",{username, password,redirect:false, callbackUrl:'/'})
       const session = await getSession()
       setUser({
         ...session?.user,
         isLoggedIn:true
       })
-      console.log(session)
+      router.replace('/')
     } catch (error) {
       setUsername('');
       setPassword('');

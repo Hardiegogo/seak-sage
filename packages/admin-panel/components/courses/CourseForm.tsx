@@ -3,6 +3,7 @@ import { createCourse } from '../../services/courseServices/courseServices';
 import { ICourse } from '../../types';
 import React, { Reducer, useReducer } from 'react';
 import { Button } from '@seek-sage/ui';
+import axios from 'axios';
 
 type ACTIONTYPE = {
   type: 'title' | 'rating' | 'imgLink' | 'description' | 'price' | 'published';
@@ -51,7 +52,7 @@ const CourseForm: React.FC = () => {
   > = async (e) => {
     e.preventDefault();
     try {
-      const res = await createCourse(newCourse);
+      const res = await axios.post('/api/courses',newCourse)
       if (res.status === 201) {
         router.push('/');
       }

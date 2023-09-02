@@ -2,18 +2,12 @@ import React, { useState } from 'react';
 import { SetterOrUpdater } from 'recoil';
 import { useRouter } from 'next/router';
 import { isAxiosError, AxiosResponse } from 'axios';
+import { signIn } from 'next-auth/react';
 
-interface IUser {
-  username: string;
-  id: string;
-  isLoggedIn: boolean;
-}
 
 const SignupForm = ({
-  setUser,
   signupUser,
 }: {
-  setUser: SetterOrUpdater<IUser>;
   signupUser: ({
     username,
     password,
@@ -34,17 +28,7 @@ const SignupForm = ({
     try {
       setError('');
       const res = await signupUser({ username, password });
-      // if (res.status === 201) {
-      //   localStorage.setItem('token', JSON.stringify(res.data.token));
-      //   localStorage.setItem(
-      //     'user',
-      //     JSON.stringify({ ...res.data.user, isLoggedIn: true })
-      //   );
-      //   setUser({ ...res.data.user, isLoggedIn: true });
-      //   setUsername('');
-      //   setPassword('');
-      //   router.replace('/');
-      // }
+      return signIn()
     } catch (error) {
       setUsername('');
       setPassword('');

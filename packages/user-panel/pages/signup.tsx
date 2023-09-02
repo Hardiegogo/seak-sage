@@ -8,7 +8,7 @@ const Signup = () => {
   const setUser = useSetRecoilState(userState);
   return (
     <main className="grid place-items-center pt-4">
-      <UserSignupForm setUser={setUser} signupUser={signupUser} />
+      <UserSignupForm signupUser={signupUser} />
     </main>
   );
 };
