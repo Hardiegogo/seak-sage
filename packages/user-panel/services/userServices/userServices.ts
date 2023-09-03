@@ -34,13 +34,6 @@ export const loginUser = async (userDetails: {
   return response;
 };
 
-export const AuthorisedApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_DEV_BACKEND,
-  timeout:1000,
-  headers: (typeof window!=='undefined') ? {
-    Authorization:'Bearer ' + JSON.parse(localStorage.getItem('token') as string)
-  } : {}
-});
 
 export const logoutUser = async (setUser:SetterOrUpdater<IUser>) => {
   setUser({

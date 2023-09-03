@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import { SetterOrUpdater } from 'recoil';
 import { useRouter } from 'next/router';
 import { isAxiosError, AxiosResponse } from 'axios';
-
-interface IUser {
-  username: string;
-  id: string;
-  isLoggedIn: boolean;
-}
+import { signIn } from 'next-auth/react';
 
 const SignupForm = ({
-  setUser,
   signupUser,
+  addSuccess,
+  addError,
 }: {
-  setUser: SetterOrUpdater<IUser>;
   signupUser: ({
     username,
     password,
@@ -21,6 +16,8 @@ const SignupForm = ({
     username: string;
     password: string;
   }) => Promise<AxiosResponse<any, any>>;
+  addError: (message: string) => void;
+  addSuccess: (message: string) => void;
 }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -34,17 +31,11 @@ const SignupForm = ({
     try {
       setError('');
       const res = await signupUser({ username, password });
-      // if (res.status === 201) {
-      //   localStorage.setItem('token', JSON.stringify(res.data.token));
-      //   localStorage.setItem(
-      //     'user',
-      //     JSON.stringify({ ...res.data.user, isLoggedIn: true })
-      //   );
-      //   setUser({ ...res.data.user, isLoggedIn: true });
-      //   setUsername('');
-      //   setPassword('');
-      //   router.replace('/');
-      // }
+      if (res.status === 201) {
+        addSuccess('User created successfully.');
+      }else {
+        addError("Error creating user.")
+      }
     } catch (error) {
       setUsername('');
       setPassword('');
@@ -55,6 +46,7 @@ const SignupForm = ({
       } else {
         setError('An error occurred');
       }
+      addError("Error creating user.")
     }
   };
   return (

@@ -4,7 +4,7 @@ import Course from '../../../models/courseModel';
 import { Session, getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 import User from '../../../models/userModel';
-import { ICourse } from 'packages/user-panel/types';
+import { ICourse } from '../../../types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,10 +25,10 @@ export default async function handler(
           const user = await User.findOne({
             username: session?.user?.username,
           });
-          if (user.purchasedCourses.includes(course._id as any)) {
+          if (user.purchasedCourses.includes(course._id)) {
             res.status(403).send({ message: 'Course already purchased' });
           } else {
-            user.purchasedCourses.push(course._id as any);
+            user.purchasedCourses.push(course._id);
             await user.save();
             res.json({ message: 'Course purchased successfully' });
           }
