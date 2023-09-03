@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import { BiUser, BiSolidDownArrow } from 'react-icons/bi';
 import dynamic from 'next/dynamic';
 import { SetterOrUpdater } from 'recoil';
+import { signIn } from 'next-auth/react';
 interface IUser {
   username: string;
   id: string;
@@ -73,9 +74,9 @@ const Navbar: React.FC<NavProps> = ({ user, logoutUser }) => {
             <Link href="/courses" className="underline text-textColor">
               Courses
             </Link>
-            <Link href="/login">
-              <Button type="normal">Sign in</Button>
-            </Link>
+            {/* <Link href="/login"> */}
+              <Button type="normal" onClick={()=>signIn()}>Sign in</Button>
+            {/* </Link> */}
             <Link href="/signup">
               <Button type="primary">Register</Button>
             </Link>

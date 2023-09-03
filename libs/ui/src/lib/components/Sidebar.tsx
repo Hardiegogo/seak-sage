@@ -59,7 +59,7 @@ const Sidebar: React.FC<{
               type="radio"
               name="rating"
               checked={filters.rating === 4}
-              onClick={() =>
+              onChange={() =>
                 setFilter((filters) => {
                   return { ...filters, rating: 4 };
                 })
@@ -72,7 +72,7 @@ const Sidebar: React.FC<{
               type="radio"
               name="rating"
               checked={filters.rating === 3}
-              onClick={() =>
+              onChange={() =>
                 setFilter((filters) => {
                   return { ...filters, rating: 3 };
                 })
@@ -85,7 +85,7 @@ const Sidebar: React.FC<{
               type="radio"
               name="rating"
               checked={filters.rating === 2}
-              onClick={() =>
+              onChange={() =>
                 setFilter((filters) => {
                   return { ...filters, rating: 2 };
                 })
@@ -98,7 +98,7 @@ const Sidebar: React.FC<{
               type="radio"
               name="rating"
               checked={filters.rating === 1}
-              onClick={() =>
+              onChange={() =>
                 setFilter((filters) => {
                   return { ...filters, rating: 1 };
                 })

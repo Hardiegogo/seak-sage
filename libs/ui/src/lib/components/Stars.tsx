@@ -7,8 +7,8 @@ const Stars:React.FC<{rating:number , filled?:boolean}> =({rating , filled})=> {
         { !filled ?
             [...Array(5)].map((item,index)=>{
                 if(index<rating){
-                    return <AiFillStar key={`star-${index}`}color='#FFD700'/>
-                }else return <AiOutlineStar />
+                    return <AiFillStar key={`star-${index}`} color='#FFD700'/>
+                }else return <AiOutlineStar key={`star-${index}`}/>
             }) : [...Array(rating)].map((item,index)=><AiFillStar key={`star-${index}`} color='#FFD700'/>)
         }
     </div>

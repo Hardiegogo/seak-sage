@@ -3,7 +3,7 @@ import { SetterOrUpdater, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import { isAxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import Button from './Button';
-
+import {getSession, signIn} from 'next-auth/react'
 interface IUser {
   username: string;
   id: string;
@@ -31,21 +31,28 @@ const LoginForm: React.FC<{
     e.preventDefault();
     try {
       setError('');
-      const res = await loginUser({ username, password });
-      if (res.status === 200) {
-        localStorage.setItem('token', JSON.stringify(res.data.token));
-        localStorage.setItem(
-          'user',
-          JSON.stringify({ ...res.data.user, isLoggedIn: true })
-        );
-        setUser({ ...res.data.user, isLoggedIn: true });
-        AuthorisedApi.defaults.headers[
-          'Authorization'
-        ] = `Bearer ${res.data.token}`;
-        setUsername('');
-        setPassword('');
-        router.replace('/');
-      }
+      // const res = await loginUser({ username, password });
+      // if (res.status === 200) {
+      //   localStorage.setItem('token', JSON.stringify(res.data.token));
+      //   localStorage.setItem(
+      //     'user',
+      //     JSON.stringify({ ...res.data.user, isLoggedIn: true })
+      //   );
+      //   setUser({ ...res.data.user, isLoggedIn: true });
+      //   AuthorisedApi.defaults.headers[
+      //     'Authorization'
+      //   ] = `Bearer ${res.data.token}`;
+      //   setUsername('');
+      //   setPassword('');
+      //   router.replace('/');
+      // }
+      const res=await signIn("credentials",{username, password,redirect:true, callbackUrl:'/'})
+      const session = await getSession()
+      setUser({
+        ...session?.user,
+        isLoggedIn:true
+      })
+      console.log(session)
     } catch (error) {
       setUsername('');
       setPassword('');
@@ -59,7 +66,7 @@ const LoginForm: React.FC<{
     }
   };
   return (
-    <form className="p-4 border border-greyVariant text-textColor w-80 h-fit">
+    <div className="p-4 border border-greyVariant text-textColor w-80 h-fit">
       <h2 className="text-center text-2xl">Login</h2>
       <div className="flex flex-col mt-3">
         <label htmlFor="username">Username:</label>
@@ -89,7 +96,7 @@ const LoginForm: React.FC<{
           Login
         </Button>
       </div>
-    </form>
+    </div>
   );
 };
 
