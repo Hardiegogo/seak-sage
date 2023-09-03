@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { useState, useRef } from 'react';
 import logo from '../assets/seekSage-1.png';
 import Link from 'next/link';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { adminState } from '../state/atoms/adminState';
 import { logoutUser } from '../services/authServices/authServices';
 import { useRouter } from 'next/router';
@@ -10,10 +10,11 @@ import dynamic from 'next/dynamic';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import useOutsideClick from '../utils/useOutsideClick';
 import { Button } from '@seek-sage/ui';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Navbar: React.FC = () => {
-  const [admin, setAdmin] = useRecoilState(adminState);
+  const {status}=useSession()
+  const setAdmin=useSetRecoilState(adminState)
   const [isMenuOptions, setIsMenuOptions] = useState(false);
   const menuRef = useRef(null);
   const secondRef = useRef(null);
@@ -39,7 +40,7 @@ const Navbar: React.FC = () => {
           <Link href="/" className="text-[26px] text-primary font-bold">seekSage</Link>
         </div>
         <div className="flex gap-3">
-          {admin.isLoggedIn ? (
+          {status==="authenticated" ? (
             <div className="relative">
               <div
                 className="p-2 hover:bg-bgDark rounded-full cursor-pointer"
