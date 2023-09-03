@@ -5,12 +5,18 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { coursesFiltersState } from '../state/atoms/coursesFiltersState';
 
 export function Index() {
-  const [filters,setCoursesFilter]=useRecoilState(coursesFiltersState)
+  const [filters, setCoursesFilter] = useRecoilState(coursesFiltersState);
   return (
+    <RequireAuth>
       <main className="flex h-full bg-bgColor p-0">
-        <Sidebar setFilter={setCoursesFilter} filters={filters} publishedOptions={true}/>
+        <Sidebar
+          setFilter={setCoursesFilter}
+          filters={filters}
+          publishedOptions={true}
+        />
         <CoursesGrid />
       </main>
+    </RequireAuth>
   );
 }
 

@@ -6,10 +6,12 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { UserCourseCard } from '@seek-sage/ui';
 import { filteredCoursesState } from '../../state/selectors/filteredCoursesState';
 import { buyCourse } from '../../services/courseServices/coursesServices';
+import { useToasts } from '../../state/context/ToastContext';
 
 const CoursesGrid = () => {
   const filteredCourses = useRecoilValue(filteredCoursesState);
   const { coursesLoading } = useCourses();
+  const {addSuccess,addError}=useToasts()
   return (
     <main className="p-8 px-12 ">
       {coursesLoading ? (
@@ -26,6 +28,8 @@ const CoursesGrid = () => {
               key={course._id}
               course={course}
               buyCourse={buyCourse}
+              addError={addError}
+              addSuccess={addSuccess}
             />
           ))}
         </div>

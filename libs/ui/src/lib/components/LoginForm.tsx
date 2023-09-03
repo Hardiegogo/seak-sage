@@ -12,15 +12,9 @@ interface IUser {
 
 const LoginForm: React.FC<{
   setUser: SetterOrUpdater<IUser>;
-  AuthorisedApi?: AxiosInstance;
-  loginUser?: ({
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  }) => Promise<AxiosResponse<any, any>>;
-}> = ({ setUser }) => {
+  addError:(message:string)=>void;
+  addSuccess:(message:string)=>void;
+}> = ({ setUser,addError,addSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
@@ -31,22 +25,12 @@ const LoginForm: React.FC<{
     e.preventDefault();
     try {
       setError('');
-      // const res = await loginUser({ username, password });
-      // if (res.status === 200) {
-      //   localStorage.setItem('token', JSON.stringify(res.data.token));
-      //   localStorage.setItem(
-      //     'user',
-      //     JSON.stringify({ ...res.data.user, isLoggedIn: true })
-      //   );
-      //   setUser({ ...res.data.user, isLoggedIn: true });
-      //   AuthorisedApi.defaults.headers[
-      //     'Authorization'
-      //   ] = `Bearer ${res.data.token}`;
-      //   setUsername('');
-      //   setPassword('');
-      //   router.replace('/');
-      // }
       const res=await signIn("credentials",{username, password,redirect:false, callbackUrl:'/'})
+      if(res?.status===200){
+        addSuccess("Successfully logged in")
+      }else {
+        addError("error signing in")
+      }
       const session = await getSession()
       setUser({
         ...session?.user,

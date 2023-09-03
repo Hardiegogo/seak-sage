@@ -4,9 +4,10 @@ import { useRouter } from 'next/router';
 import { isAxiosError, AxiosResponse } from 'axios';
 import { signIn } from 'next-auth/react';
 
-
 const SignupForm = ({
   signupUser,
+  addSuccess,
+  addError,
 }: {
   signupUser: ({
     username,
@@ -15,6 +16,8 @@ const SignupForm = ({
     username: string;
     password: string;
   }) => Promise<AxiosResponse<any, any>>;
+  addError: (message: string) => void;
+  addSuccess: (message: string) => void;
 }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +31,11 @@ const SignupForm = ({
     try {
       setError('');
       const res = await signupUser({ username, password });
-      return signIn()
+      if (res.status === 201) {
+        addSuccess('User created successfully.');
+      }else {
+        addError("Error creating user.")
+      }
     } catch (error) {
       setUsername('');
       setPassword('');
@@ -39,6 +46,7 @@ const SignupForm = ({
       } else {
         setError('An error occurred');
       }
+      addError("Error creating user.")
     }
   };
   return (

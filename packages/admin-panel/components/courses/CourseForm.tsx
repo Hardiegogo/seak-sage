@@ -4,6 +4,7 @@ import { ICourse } from '../../types';
 import React, { Reducer, useReducer } from 'react';
 import { Button } from '@seek-sage/ui';
 import axios from 'axios';
+import { useToasts } from 'packages/admin-panel/state/context/ToastContext';
 
 type ACTIONTYPE = {
   type: 'title' | 'rating' | 'imgLink' | 'description' | 'price' | 'published';
@@ -47,6 +48,7 @@ const CourseForm: React.FC = () => {
     defaultCourse
   );
   const router = useRouter();
+  const {addSuccess,addError}=useToasts()
   const createCourseHandler: React.MouseEventHandler<
     HTMLButtonElement
   > = async (e) => {
@@ -54,9 +56,13 @@ const CourseForm: React.FC = () => {
     try {
       const res = await axios.post('/api/courses',newCourse)
       if (res.status === 201) {
+        addSuccess("Added course successfully.")
         router.push('/');
+      }else {
+        addError("Error adding course.")
       }
     } catch (error) {
+      addError("Error adding course.")
       console.log(error);
     }
   };

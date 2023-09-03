@@ -30,13 +30,12 @@ const ProgressiveLoader: React.FC<Props> = ({ imgSrc }) => {
         src={
           'https://res.cloudinary.com/dqqehaaqo/image/upload/v1689867669/default_g8zfom.jpg'
         }
-        className="rounded-t-xl"
         alt="gg"
         fill
       />
     )
   ) : (
-    <div className="w-full h-full bg-gray-300 animate-pulse rounded-xl"></div>
+    <div className="w-full h-full bg-gray-300 animate-pulse"></div>
   );
 };
 

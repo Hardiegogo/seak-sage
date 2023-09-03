@@ -28,7 +28,7 @@ const CustomApp = ({
   pageProps: { session, ...pageProps },
 }: AppProps) => {
   return (
-    <>
+    <div className='bg-bgColor min-h-screen'>
       <ToastProvider>
         <SessionProvider session={session}>
           <RecoilRoot>
@@ -39,7 +39,7 @@ const CustomApp = ({
           </RecoilRoot>
         </SessionProvider>
       </ToastProvider>
-    </>
+    </div>
   );
 };
 

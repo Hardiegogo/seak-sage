@@ -5,10 +5,11 @@ import { userState } from '../state/atoms/userState';
 import {
   loginUser,
 } from '../services/userServices/userServices';
+import { useToasts } from '../state/context/ToastContext';
 
 const Login = () => {
   const [user, setUser] = useRecoilState(userState);
-
+  const {addError,addSuccess}=useToasts()
   useEffect(() => {
     if (user.isLoggedIn) {
       setUser({
@@ -24,7 +25,8 @@ const Login = () => {
     <main className="grid place-items-center pt-24">
       <UserLoginForm
         setUser={setUser}
-        loginUser={loginUser}
+        addError={addError}
+        addSuccess={addSuccess}
       />
     </main>
   );

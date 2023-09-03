@@ -1,4 +1,3 @@
-import { fetchCourses } from '../../services/courseServices/courseServices';
 import { coursesState } from '../../state/atoms/coursesState';
 import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -6,6 +5,7 @@ import CourseCard from './CourseCard';
 import { useRouter } from 'next/router';
 import axios, { AxiosError } from 'axios';
 import { filteredCoursesState } from '../../state/selectors/filteredCoursesState';
+import { signIn } from 'next-auth/react';
 
 const CoursesGrid: React.FC = () => {
   const setCourses= useSetRecoilState(coursesState);
@@ -20,9 +20,7 @@ const CoursesGrid: React.FC = () => {
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error?.response?.status === 401) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('admin');
-            router.push('/login');
+            return signIn()
           }
         }
       }

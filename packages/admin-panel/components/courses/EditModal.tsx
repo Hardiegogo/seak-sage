@@ -3,6 +3,7 @@ import { ICourse } from '../../types';
 import { useRouter } from 'next/router';
 import { RxCross2 } from 'react-icons/rx';
 import axios from 'axios';
+import { useToasts } from '../../state/context/ToastContext';
 
 type ACTIONTYPE = {
   type: 'title' | 'rating' | 'imgLink' | 'description' | 'price' | 'published';
@@ -40,6 +41,7 @@ const EditModal: React.FC<{
     course
   );
   const router = useRouter();
+  const {addSuccess,addError}=useToasts()
   const saveCourseHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
@@ -47,9 +49,11 @@ const EditModal: React.FC<{
     try {
       const res = await axios.put(`/api/courses/${selectedCourse?._id}`,{...selectedCourse});
       if (res.status === 200) {
+        addSuccess("Course updated successfully.")
         router.replace('/');
       }
     } catch (error) {
+      addError("Error updating course.")
       console.log(error);
     }
   };

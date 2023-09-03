@@ -6,27 +6,31 @@ import { coursesState } from '../state/atoms/coursesState';
 import { ICourse } from '../types';
 import ProgressiveLoader from '../components/ProgressiveLoader';
 import EditModal from '../components/courses/EditModal';
-import { Stars } from '@seek-sage/ui';
+import { ConfirmationModal, Stars } from '@seek-sage/ui';
 import axios from 'axios';
 import { useToasts } from '../state/context/ToastContext';
-
 
 const CoursePage = () => {
   const router = useRouter();
   const courses = useRecoilValue(coursesState);
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null);
   const [isEdit, setIsEdit] = useState(false);
-  const {addSuccess}=useToasts()
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const { addSuccess, addError } = useToasts();
 
   const deleteHandler: React.MouseEventHandler<
     HTMLButtonElement
   > = async () => {
     try {
-      const res = await axios.delete(`/api/courses/${selectedCourse?._id as string}`);
+      const res = await axios.delete(
+        `/api/courses/${selectedCourse?._id as string}`
+      );
       if (res.status === 200) {
+        addSuccess('Course deleted.');
         router.replace('/');
       }
     } catch (error) {
+      addError('error deleting course');
       console.log(error);
     }
   };
@@ -35,15 +39,18 @@ const CoursePage = () => {
     HTMLButtonElement
   > = async () => {
     try {
-      const res = await axios.put(`/api/courses/${selectedCourse?._id}`,{
+      const res = await axios.put(`/api/courses/${selectedCourse?._id}`, {
         ...selectedCourse,
         published: !selectedCourse?.published,
       } as ICourse);
       if (res.status === 200) {
-        await addSuccess("Course published successfully")
+        if (!selectedCourse?.published) {
+          addSuccess('Course published successfully');
+        } else addSuccess('Course unpublished');
         router.replace('/');
       }
     } catch (error) {
+      addError('error updating course');
       console.log(error);
     }
   };
@@ -63,6 +70,7 @@ const CoursePage = () => {
     }
   }, []);
   return (
+    <RequireAuth>
       <main className=" grid place-items-center pt-8 bg-bgColor text-textColor">
         {selectedCourse ? (
           <div className="w-[768px] min-w-[50%] flex gap-8">
@@ -77,10 +85,12 @@ const CoursePage = () => {
               <div className="mt-2">
                 <div className="flex justify-end">
                   <p className="text-md">
-                    <Stars rating={selectedCourse.rating}/>
+                    <Stars rating={selectedCourse.rating} />
                   </p>
                 </div>
-                <p className="mt-2 text-base text-lightText">{selectedCourse.description}</p>
+                <p className="mt-2 text-base text-lightText">
+                  {selectedCourse.description}
+                </p>
               </div>
             </div>
             <div className="flex flex-col items-start gap-6 flex-grow-0">
@@ -107,7 +117,7 @@ const CoursePage = () => {
               </button>
               <button
                 className="border-none px-3 py-2 bg-red-500 text-bgColor rounded-xl hover:bg-red-400 w-40"
-                onClick={deleteHandler}
+                onClick={() => setIsDeleteModal(true)}
               >
                 Delete course
               </button>
@@ -124,7 +134,15 @@ const CoursePage = () => {
         {isEdit && (
           <EditModal course={selectedCourse as ICourse} setIsEdit={setIsEdit} />
         )}
+        <ConfirmationModal
+          isModal={isDeleteModal}
+          setIsModal={setIsDeleteModal}
+          clickHandler={(e) => deleteHandler(e)}
+          message="Delete this course?"
+          isDanger={true}
+        />
       </main>
+    </RequireAuth>
   );
 };
 
