@@ -3,6 +3,12 @@ import  CredentialsProvider  from "next-auth/providers/credentials"
 import dbConnect from "../../../lib/dbConnect"
 import User from "../../../models/userModel"
 import { Provider } from "next-auth/providers"
+import {z} from 'zod'
+
+const userInputSchema = z.object({
+  username: z.string().min(3).max(40),
+  password: z.string().min(6).max(20),
+});
 
 export const authOptions:any = {
   // Configure one or more authentication providers
@@ -23,14 +29,20 @@ export const authOptions:any = {
         async authorize(credentials, req) {
           // Add logic here to look up the user from the credentials supplied
           await dbConnect()
-          if (credentials?.password?.length && credentials?.username?.length) {
-            const existingUser = await User.findOne({username:credentials.username, password:credentials.password});
-            if (existingUser) {
-                return existingUser
-            } else return null
-          } else {
-            return null
+          const parsedInput = userInputSchema.safeParse({
+            username: credentials?.username,
+            password: credentials?.password,
+          });
+          if (!parsedInput.success) {
+            return null;
           }
+          const existingUser = await User.findOne({
+            username: parsedInput.data.username,
+            password: parsedInput.data.password,
+          });
+          if (existingUser) {
+            return existingUser;
+          } else return null;
         }
       })
     ] as Provider[],
