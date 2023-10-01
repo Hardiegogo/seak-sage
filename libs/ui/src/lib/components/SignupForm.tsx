@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
-import { SetterOrUpdater } from 'recoil';
 import { useRouter } from 'next/router';
 import { isAxiosError, AxiosResponse } from 'axios';
-import { signIn } from 'next-auth/react';
+import { z } from 'zod';
+
+const userInputSchema = z.object({
+  username: z
+    .string()
+    .min(3, 'username must have atleast 3 characters')
+    .max(40, 'username max length should be 40 characters'),
+  password: z
+    .string()
+    .min(6, 'password must have atleast 6 characters')
+    .max(20, 'password max length should be 20 characters'),
+});
 
 const SignupForm = ({
   signupUser,
@@ -21,30 +31,35 @@ const SignupForm = ({
 }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter();
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<
+    z.inferFlattenedErrors<typeof userInputSchema>
+  >();
 
   const clickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
     e.preventDefault();
     try {
-      setError('');
-      const res = await signupUser({ username, password });
-      if (res.status === 201) {
-        addSuccess('User created successfully.');
-      }else {
-        addError("Error creating user.")
+      const parsedInput = userInputSchema.safeParse({ username, password });
+      if (!parsedInput.success) {
+        setErrors(parsedInput.error.flatten());
+      } else {
+        const res = await signupUser({ username:parsedInput.data.username, password:parsedInput.data.password });
+        if (res.status === 201) {
+          addSuccess('User created successfully.');
+        } else {
+          addError('Error creating user.');
+        }
       }
     } catch (error) {
       setUsername('');
       setPassword('');
       if (isAxiosError(error)) {
         if (error.response) {
-          setError(error.response.data);
+          addError(error.response.data);
         }
       } else {
-        setError('An error occurred');
+        addError('An error occurred');
       }
       addError("Error creating user.")
     }
@@ -62,6 +77,9 @@ const SignupForm = ({
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
+        {errors?.fieldErrors?.username ? (
+          <p className="text-red-500">{errors.fieldErrors['username']}</p>
+        ) : null}
       </div>
       <div className="flex flex-col mt-3">
         <label htmlFor="password">Password:</label>
@@ -74,7 +92,9 @@ const SignupForm = ({
           value={password}
         />
       </div>
-      {error.length ? <span className="text-red-700 ">{error}</span> : null}
+      {errors?.fieldErrors?.password ? (
+        <p className="text-red-500">{errors.fieldErrors['password']}</p>
+      ) : null}
       <button
         className="mt-6 bg-primary px-3 py-2 rounded-xl text-bgColor hover:opacity-90 w-full"
         onClick={clickHandler}

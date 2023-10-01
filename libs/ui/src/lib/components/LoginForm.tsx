@@ -3,7 +3,20 @@ import { SetterOrUpdater, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import { isAxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import Button from './Button';
-import {getSession, signIn} from 'next-auth/react'
+import { getSession, signIn } from 'next-auth/react';
+import { z } from 'zod';
+
+const userInputSchema = z.object({
+  username: z
+    .string()
+    .min(3, 'username must have atleast 3 characters')
+    .max(40, 'username max length should be 40 characters'),
+  password: z
+    .string()
+    .min(6, 'password must have atleast 6 characters')
+    .max(20, 'password max length should be 20 characters'),
+});
+
 interface IUser {
   username: string;
   id: string;
@@ -12,41 +25,55 @@ interface IUser {
 
 const LoginForm: React.FC<{
   setUser: SetterOrUpdater<IUser>;
-  addError:(message:string)=>void;
-  addSuccess:(message:string)=>void;
-}> = ({ setUser,addError,addSuccess }) => {
+  addError: (message: string) => void;
+  addSuccess: (message: string) => void;
+}> = ({ setUser, addError, addSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const [error, setError] = useState('');
+  const [errors, setErrors] =
+    useState<z.inferFlattenedErrors<typeof userInputSchema> | null>();
   const clickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
     e.preventDefault();
+    setErrors(null);
     try {
-      setError('');
-      const res=await signIn("credentials",{username, password,redirect:false, callbackUrl:'/'})
-      if(res?.status===200){
-        addSuccess("Successfully logged in")
-      }else {
-        addError("error signing in")
+      const parsedInput = userInputSchema.safeParse({ username, password });
+      if (!parsedInput.success) {
+        setErrors(parsedInput.error.flatten());
+      } else {
+        const res = await signIn('credentials', {
+          username,
+          password,
+          redirect: false,
+          callbackUrl: '/',
+        });
+        if (res?.status === 200) {
+          addSuccess('Successfully logged in');
+          router.replace('/');
+        } else {
+          setUsername('');
+          setPassword('');
+          addError('error signing in');
+        }
+        const session = await getSession();
+        setUser({
+          ...session?.user,
+          isLoggedIn: true,
+        });
       }
-      const session = await getSession()
-      setUser({
-        ...session?.user,
-        isLoggedIn:true
-      })
-      router.replace('/')
     } catch (error) {
       setUsername('');
       setPassword('');
       if (isAxiosError(error)) {
         if (error.response) {
-          setError(error.response.data);
+          addError(error.response.data);
         }
       } else {
-        setError('An error occurred');
+        addError('An error occurred');
       }
+      addError('Error creating user.');
     }
   };
   return (
@@ -62,6 +89,9 @@ const LoginForm: React.FC<{
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
+        {errors?.fieldErrors?.username ? (
+          <p className="text-red-500">{errors.fieldErrors['username']}</p>
+        ) : null}
       </div>
       <div className="flex flex-col mt-3">
         <label htmlFor="password">Password:</label>
@@ -73,8 +103,10 @@ const LoginForm: React.FC<{
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
+        {errors?.fieldErrors?.password ? (
+          <p className="text-red-500">{errors.fieldErrors['password']}</p>
+        ) : null}
       </div>
-      {error.length ? <span className="text-red-700 ">{error}</span> : null}
       <div className="mt-6">
         <Button onClick={clickHandler} type="primary">
           Login

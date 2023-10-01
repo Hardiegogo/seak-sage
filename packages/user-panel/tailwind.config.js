@@ -23,16 +23,31 @@ module.exports = {
       //   greyVariant:"#DADAD9",
       //   secondary:"#5B5F97"
       // },
-      colors:{
-        bgColor:"#F5FCFF",
-        // bgColor:"#FAFAFA",
-        bgDark: "#D9EBFF",
-        bgDarker: "#C2D9FF",
-        textColor:"#273e5c",
-        lightText:"#4d6c82",
-        primary:"#305d8c",
-        greyVariant:"#AEBFD6",
-        secondary:"#5B5F97"
+      // colors:{
+      //   bgColor:"#F5FCFF",
+      //   // bgColor:"#FAFAFA",
+      //   bgDark: "#D9EBFF",
+      //   bgDarker: "#C2D9FF",
+      //   textColor:"#273e5c",
+      //   lightText:"#4d6c82",
+      //   primary:"#305d8c",
+      //   greyVariant:"#AEBFD6",
+      //   secondary:"#5B5F97"
+      // },
+      colors: {
+        // Background Colors
+        bgColor: "#1E1E1E",       // Dark background color
+        bgDark: "#333333",        // Slightly darker background color
+        bgDarker: "#000000",      // Darkest background color
+      
+        // Text Colors
+        textColor: "#FFFFFF",     // White text on dark background
+        lightText: "#AEBFD6",     // Lighter text color for secondary information
+      
+        // Accent Colors
+        primary: "#305d8c",       // Primary accent color
+        greyVariant: "#767676",   // Grey variant for secondary elements
+        secondary: "#5B5F97",     // Secondary accent color
       }
     },
   },

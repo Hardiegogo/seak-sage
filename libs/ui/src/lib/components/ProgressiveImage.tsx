@@ -1,4 +1,5 @@
 import NextImage from 'next/image';
+import { resolve } from 'path';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
@@ -42,7 +43,7 @@ const ProgressiveImage: React.FC<Props> = ({ imgSrc }) => {
       />
     )
   ) : (
-    <div className="w-full h-full bg-gray-300 animate-pulse rounded-xl"></div>
+    <div className="w-[250px] h-[160px] bg-gray-300 animate-pulse"></div>
   );
 };
 

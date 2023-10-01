@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import { BiUser, BiSolidDownArrow } from 'react-icons/bi';
 import dynamic from 'next/dynamic';
 import { SetterOrUpdater } from 'recoil';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 interface IUser {
   username: string;
   id: string;
@@ -20,6 +20,7 @@ interface NavProps {
 
 const Navbar: React.FC<NavProps> = ({ user, logoutUser }) => {
   const [isUserDropDown, setIsUserDropDown] = useState(false);
+  const {status}=useSession()
   const logoutHandler = () => {
     setIsUserDropDown(false);
     logoutUser();
@@ -33,7 +34,7 @@ const Navbar: React.FC<NavProps> = ({ user, logoutUser }) => {
             <Link href="/">seekSage</Link>
           </h1>
         </div>
-        {user.isLoggedIn ? (
+        {status==="authenticated" ? (
           <div className="flex gap-4 items-center relative">
             <Link href="/courses" className="underline text-textColor">
               Courses

@@ -1,9 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '../../../lib/dbConnect';
 import Course from '../../../models/courseModel';
-import { ICourse } from '../../../types';
 import { Session, getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
+import { z } from 'zod';
+
+const courseInputSchema=z.object({
+  title:z.string().min(3).max(150),
+  rating:z.number().positive().gte(0).lte(5,"Max rating should be 5!"),
+  description:z.string().min(50).max(700),
+  published:z.boolean(),
+  price:z.number().min(0).max(4999),
+  imgLink:z.string()
+})
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,9 +32,13 @@ export default async function handler(
           message: 'Successfully deleted',
         });
       } else if (req.method === 'PUT') {
+        const parsedInput=courseInputSchema.safeParse(req.body)
+        if(!parsedInput.success){
+          return res.status(411).json({message:"Incorrect course input"})
+        }
         const course = await Course.findByIdAndUpdate(
           req.query.courseId,
-          req.body,
+          parsedInput.data,
           {
             new: true,
           }

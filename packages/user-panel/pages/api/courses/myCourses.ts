@@ -10,9 +10,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    await dbConnect();    
-    const session : Session | null = await getServerSession(req, res, authOptions);
-    if(session){
+    await dbConnect();
+    const session: Session | null = await getServerSession(
+      req,
+      res,
+      authOptions
+    );
+    if (session) {
       const user = await User.findOne({
         username: session?.user?.username,
       }).populate('purchasedCourses');
@@ -22,7 +26,6 @@ export default async function handler(
         res.status(403).json({ message: 'User not found' });
       }
     }
-
   } catch (error) {
     console.log(error);
   }
